@@ -1,1 +1,2 @@
 # Hand-Cricket-game
+The Hand Cricket Game is a simple Java-based mini game inspired by the popular hand cricket played among friends. In this game, the user competes against the computer by entering numbers between 1 to 6. The game follows basic cricket rules such as batting, bowling, scoring runs, and getting out when both player and computer choose the same number.
