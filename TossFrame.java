@@ -12,14 +12,20 @@ public class TossFrame extends JFrame {
 
     private JButton headButton;
     private JButton tailButton;
+
     private JButton batButton;
     private JButton bowlButton;
+
     private JButton backButton;
 
     private JLabel resultLabel;
     private JLabel choiceLabel;
 
-    public TossFrame() {
+    private String playerName;
+
+    public TossFrame(String playerName) {
+
+        this.playerName = playerName;
 
         setTitle("Hand Cricket - Toss");
         setSize(500, 500);
@@ -32,92 +38,142 @@ public class TossFrame extends JFrame {
                 new GridLayout(9, 1, 10, 10)
         );
 
+        // =========================
+        // TITLE
+        // =========================
+
         JLabel titleLabel = new JLabel(
                 "TOSS",
                 SwingConstants.CENTER
         );
 
         titleLabel.setFont(
-                new Font("Arial", Font.BOLD, 28)
+                new Font(
+                        "Arial",
+                        Font.BOLD,
+                        28
+                )
         );
+
+        // =========================
+        // INSTRUCTION
+        // =========================
 
         JLabel instructionLabel = new JLabel(
                 "Choose Head or Tail",
                 SwingConstants.CENTER
         );
 
+        // =========================
+        // RESULT
+        // =========================
+
         resultLabel = new JLabel(
                 "Waiting for your choice...",
                 SwingConstants.CENTER
         );
+
+        // =========================
+        // CHOICE
+        // =========================
 
         choiceLabel = new JLabel(
                 "",
                 SwingConstants.CENTER
         );
 
+        // =========================
+        // BUTTONS
+        // =========================
+
         headButton = new JButton("Head");
+
         tailButton = new JButton("Tail");
 
         batButton = new JButton("Bat");
+
         bowlButton = new JButton("Bowl");
 
         backButton = new JButton("Back");
 
-        // Initially Bat and Bowl buttons are hidden
+        // Hide Bat and Bowl initially
         batButton.setVisible(false);
         bowlButton.setVisible(false);
 
-        // Add components to panel
+        // =========================
+        // ADD COMPONENTS
+        // =========================
+
         panel.add(titleLabel);
+
         panel.add(instructionLabel);
+
         panel.add(headButton);
+
         panel.add(tailButton);
+
         panel.add(resultLabel);
+
         panel.add(choiceLabel);
+
         panel.add(batButton);
+
         panel.add(bowlButton);
+
         panel.add(backButton);
 
         add(panel);
 
-        // Head button
+        // =========================
+        // HEAD BUTTON
+        // =========================
+
         headButton.addActionListener(e -> {
 
             performToss("Head");
 
         });
 
-        // Tail button
+        // =========================
+        // TAIL BUTTON
+        // =========================
+
         tailButton.addActionListener(e -> {
 
             performToss("Tail");
 
         });
 
-        // Bat button
+        // =========================
+        // BAT BUTTON
+        // =========================
+
         batButton.addActionListener(e -> {
 
             GameFrame gameFrame =
-                    new GameFrame();
+                    new GameFrame(playerName);
 
             gameFrame.setVisible(true);
 
             dispose();
-
         });
 
-        // Bowl button
+        // =========================
+        // BOWL BUTTON
+        // =========================
+
         bowlButton.addActionListener(e -> {
 
             JOptionPane.showMessageDialog(
                     this,
-                    "Bowling screen will be added next."
+                    "Bowling mode will be added next."
             );
-
         });
 
-        // Back button
+        // =========================
+        // BACK BUTTON
+        // =========================
+
         backButton.addActionListener(e -> {
 
             MainMenuFrame mainMenuFrame =
@@ -126,9 +182,12 @@ public class TossFrame extends JFrame {
             mainMenuFrame.setVisible(true);
 
             dispose();
-
         });
     }
+
+    // =========================
+    // TOSS METHOD
+    // =========================
 
     private void performToss(String playerChoice) {
 
@@ -145,12 +204,16 @@ public class TossFrame extends JFrame {
             computerChoice = "Tail";
         }
 
-        // Player wins toss
+        // =========================
+        // PLAYER WINS TOSS
+        // =========================
+
         if (playerChoice.equals(computerChoice)) {
 
             resultLabel.setText(
-                    "You won the toss! (" +
-                    computerChoice + ")"
+                    "You won the toss! ("
+                    + computerChoice
+                    + ")"
             );
 
             choiceLabel.setText(
@@ -158,28 +221,33 @@ public class TossFrame extends JFrame {
             );
 
             batButton.setVisible(true);
+
             bowlButton.setVisible(true);
 
             headButton.setEnabled(false);
+
             tailButton.setEnabled(false);
 
-        } 
-        
-        // Player loses toss
+        }
+
+        // =========================
+        // PLAYER LOSES TOSS
+        // =========================
+
         else {
 
             resultLabel.setText(
-                    "You lost the toss! (" +
-                    computerChoice + ")"
+                    "You lost the toss! ("
+                    + computerChoice
+                    + ")"
             );
 
             choiceLabel.setText(
                     "Computer will choose Bat/Bowl"
             );
 
-            // For now computer chooses Bat
             GameFrame gameFrame =
-                    new GameFrame();
+                    new GameFrame(playerName);
 
             gameFrame.setVisible(true);
 

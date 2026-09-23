@@ -9,6 +9,7 @@ import java.awt.*;
 
 public class MainMenuFrame extends JFrame {
 
+    private JTextField nameField;
     private JButton startButton;
     private JButton exitButton;
 
@@ -19,8 +20,22 @@ public class MainMenuFrame extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
-        JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(4, 1, 10, 10));
+        // =========================
+        // MAIN PANEL
+        // =========================
+
+        JPanel mainPanel = new JPanel();
+        mainPanel.setLayout(new BorderLayout(10, 10));
+
+        mainPanel.setBorder(
+                BorderFactory.createEmptyBorder(
+                        30, 40, 30, 40
+                )
+        );
+
+        // =========================
+        // TITLE
+        // =========================
 
         JLabel titleLabel = new JLabel(
                 "HAND CRICKET GAME",
@@ -28,29 +43,159 @@ public class MainMenuFrame extends JFrame {
         );
 
         titleLabel.setFont(
-                new Font("Arial", Font.BOLD, 28)
+                new Font(
+                        "Arial",
+                        Font.BOLD,
+                        28
+                )
         );
 
-        startButton = new JButton("Start Game");
-        exitButton = new JButton("Exit");
+        mainPanel.add(
+                titleLabel,
+                BorderLayout.NORTH
+        );
 
-        panel.add(titleLabel);
-        panel.add(startButton);
-        panel.add(exitButton);
+        // =========================
+        // CENTER PANEL
+        // =========================
 
-        add(panel);
+        JPanel centerPanel = new JPanel(
+                new GridBagLayout()
+        );
 
-        // Start Game button
+        GridBagConstraints gbc =
+                new GridBagConstraints();
+
+        gbc.insets = new Insets(
+                8, 8, 8, 8
+        );
+
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+
+        // =========================
+        // NAME LABEL
+        // =========================
+
+        JLabel nameLabel = new JLabel(
+                "Enter Your Name:"
+        );
+
+        nameLabel.setFont(
+                new Font(
+                        "Arial",
+                        Font.BOLD,
+                        16
+                )
+        );
+
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.gridwidth = 2;
+
+        centerPanel.add(
+                nameLabel,
+                gbc
+        );
+
+        // =========================
+        // NAME FIELD
+        // =========================
+
+        nameField = new JTextField();
+
+        nameField.setPreferredSize(
+                new Dimension(300, 35)
+        );
+
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        gbc.gridwidth = 2;
+
+        centerPanel.add(
+                nameField,
+                gbc
+        );
+
+        // =========================
+        // START BUTTON
+        // =========================
+
+        startButton = new JButton(
+                "Start Game"
+        );
+
+        startButton.setPreferredSize(
+                new Dimension(140, 40)
+        );
+
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        gbc.gridwidth = 1;
+
+        centerPanel.add(
+                startButton,
+                gbc
+        );
+
+        // =========================
+        // EXIT BUTTON
+        // =========================
+
+        exitButton = new JButton(
+                "Exit"
+        );
+
+        exitButton.setPreferredSize(
+                new Dimension(140, 40)
+        );
+
+        gbc.gridx = 1;
+        gbc.gridy = 2;
+        gbc.gridwidth = 1;
+
+        centerPanel.add(
+                exitButton,
+                gbc
+        );
+
+        mainPanel.add(
+                centerPanel,
+                BorderLayout.CENTER
+        );
+
+        add(mainPanel);
+
+        // =========================
+        // START GAME ACTION
+        // =========================
+
         startButton.addActionListener(e -> {
 
-            TossFrame tossFrame = new TossFrame();
+            String playerName =
+                    nameField.getText().trim();
+
+            if (playerName.isEmpty()) {
+
+                JOptionPane.showMessageDialog(
+                        this,
+                        "Please enter your name."
+                );
+
+                return;
+            }
+
+            TossFrame tossFrame =
+                    new TossFrame(playerName);
 
             tossFrame.setVisible(true);
 
             dispose();
         });
 
-        // Exit button
+        // =========================
+        // EXIT ACTION
+        // =========================
+
         exitButton.addActionListener(e -> {
 
             System.exit(0);
@@ -58,5 +203,3 @@ public class MainMenuFrame extends JFrame {
         });
     }
 }
-
-    
